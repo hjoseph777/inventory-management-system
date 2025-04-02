@@ -1,0 +1,68 @@
+{
+  "items": [
+    {
+      "id": "INV001",
+      "name": "Laptop Dell XPS 13",
+      "description": "High-end laptop with 16GB RAM and 512GB SSD",
+      "category": "Electronics",
+      "quantity": 15,
+      "price": 1299.99,
+      "supplier": "Dell Inc.",
+      "sku": "DELL-XPS13-001",
+      "location": "Warehouse A, Shelf 2",
+      "lastRestocked": "2023-06-15T10:30:00Z",
+      "minimumStock": 5,
+      "image": "laptop-dell-xps13.jpg"
+    },
+    {
+      "id": "INV002",
+      "name": "Office Chair",
+      "description": "Ergonomic office chair with lumbar support",
+      "category": "Furniture",
+      "quantity": 25,
+      "price": 179.99,
+      "supplier": "Office Solutions",
+      "sku": "CHAIR-ERGO-002",
+      "location": "Warehouse B, Section 5",
+      "lastRestocked": "2023-05-20T14:15:00Z",
+      "minimumStock": 8,
+      "image": "office-chair.jpg"
+    },
+    {
+      "id": "INV003",
+      "name": "Wireless Mouse",
+      "description": "Bluetooth wireless mouse with 6-month battery life",
+      "category": "Electronics",
+      "quantity": 50,
+      "price": 24.99,
+      "supplier": "Logitech",
+      "sku": "LOGI-MOUSE-003",
+      "location": "Warehouse A, Shelf 3",
+      "lastRestocked": "2023-06-01T09:45:00Z",
+      "minimumStock": 15,
+      "image": "wireless-mouse.jpg"
+    }
+  ],
+  "categories": [
+    "Electronics",
+    "Furniture",
+    "Office Supplies",
+    "Apparel",
+    "Tools"
+  ],
+  "suppliers": [
+    "Dell Inc.",
+    "Office Solutions",
+    "Logitech",
+    "Apple",
+    "Samsung",
+    "Office Depot"
+  ],
+  "locations": [
+    "Warehouse A, Shelf 1",
+    "Warehouse A, Shelf 2",
+    "Warehouse A, Shelf 3",
+    "Warehouse B, Section 1",
+    "Warehouse B, Section 5"
+  ]
+}
