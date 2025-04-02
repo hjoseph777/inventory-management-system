@@ -50,10 +50,10 @@ The Inventory Management System is a web-based application designed to help busi
 - **Phase 5 (Week 9-10):** Testing, bug fixing, and deployment
 
 ## Team Resources
-- Frontend Developer: [Name]
-- Backend Developer: [Name]
-- UI/UX Designer: [Name]
-- Project Manager: [Name]
+- Frontend Developer: Mitchell Callaghan 
+- Backend Developer: Harry Joseph
+- UI/UX Designer: Mitchell/Harry
+- Project Manager: Mitchell/Harry
 
 ## Budget Estimation
 [Include budget details if applicable]
