@@ -1,4 +1,4 @@
-# Inventory Management System
+# Inventory Management System [Click Live Link  Project](https://hjoseph777.github.io/inventory-management-system/)
 
 A comprehensive web-based application for tracking and managing inventory efficiently.
 
