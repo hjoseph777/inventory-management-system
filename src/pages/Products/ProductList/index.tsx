@@ -10,12 +10,19 @@ const ProductList = () => {
 
   useEffect(() => {
     loadProducts();
-  }, [location]); // Reload when location changes (e.g., after adding a product)
+  }, [location]);
 
-  const loadProducts = async () => {
+const loadProducts = async () => {
     setLoading(true);
     try {
+      console.log('Fetching inventory items in ProductList...');
       const items = await fetchInventoryItems();
+      console.log('Fetched items:', items);
+      
+      if (!items || items.length === 0) {
+        console.log('No items found or empty array returned');
+      }
+      
       setProducts(items);
     } catch (error) {
       console.error('Error loading products:', error);
