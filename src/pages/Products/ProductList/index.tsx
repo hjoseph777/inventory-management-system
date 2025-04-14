@@ -1,26 +1,28 @@
 import React, { useEffect, useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
 import { fetchInventoryItems } from '../../../utils/api/inventory';
 import { InventoryItem } from '../../../types/inventory';
 
 const ProductList = () => {
   const [products, setProducts] = useState<InventoryItem[]>([]);
   const [loading, setLoading] = useState(true);
+  const location = useLocation();
 
   useEffect(() => {
-    const loadProducts = async () => {
-      try {
-        const items = await fetchInventoryItems();
-        setProducts(items);
-      } catch (error) {
-        console.error('Error loading products:', error);
-      } finally {
-        setLoading(false);
-      }
-    };
-
     loadProducts();
-  }, []);
+  }, [location]); // Reload when location changes (e.g., after adding a product)
+
+  const loadProducts = async () => {
+    setLoading(true);
+    try {
+      const items = await fetchInventoryItems();
+      setProducts(items);
+    } catch (error) {
+      console.error('Error loading products:', error);
+    } finally {
+      setLoading(false);
+    }
+  };
 
   return (
     <div className="product-list-page">
@@ -45,19 +47,25 @@ const ProductList = () => {
               </tr>
             </thead>
             <tbody>
-              {products.map(product => (
-                <tr key={product.id}>
-                  <td>{product.name}</td>
-                  <td>{product.sku}</td>
-                  <td>{product.category}</td>
-                  <td>${product.price.toFixed(2)}</td>
-                  <td>{product.quantity}</td>
-                  <td>
-                    <Link to={`/inventory/${product.id}`}>View</Link>
-                    <Link to={`/inventory/${product.id}/edit`}>Edit</Link>
-                  </td>
+              {products.length === 0 ? (
+                <tr>
+                  <td colSpan={6}>No products found</td>
                 </tr>
-              ))}
+              ) : (
+                products.map(product => (
+                  <tr key={product.id}>
+                    <td>{product.name}</td>
+                    <td>{product.sku}</td>
+                    <td>{product.category}</td>
+                    <td>${product.price.toFixed(2)}</td>
+                    <td>{product.quantity}</td>
+                    <td>
+                      <Link to={`/inventory/${product.id}`}>View</Link>
+                      <Link to={`/inventory/${product.id}/edit`}>Edit</Link>
+                    </td>
+                  </tr>
+                ))
+              )}
             </tbody>
           </table>
         </div>
