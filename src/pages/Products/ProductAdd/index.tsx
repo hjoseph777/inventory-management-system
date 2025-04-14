@@ -28,11 +28,17 @@ const ProductAdd = () => {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     try {
+      
+      console.log('Creating new product with data:', formData);
+
       // Create new inventory item with form data
       await createInventoryItem({
         ...formData,
         lastRestocked: new Date().toISOString()
       } as Omit<InventoryItem, 'id'>);
+    
+      console.log('Product created successfully');
+
       // Navigate back to products list
       navigate('/products');
     } catch (error) {
