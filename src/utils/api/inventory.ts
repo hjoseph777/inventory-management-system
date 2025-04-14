@@ -1,22 +1,56 @@
-import { InventoryItem, InventoryFilter } from '../../types/inventory';
-import { ApiResponse } from '../../types/common';
+import { InventoryItem } from '../../types/inventory';
 
-// Function to get items from localStorage or fetch from JSON if not available
 export const fetchInventoryItems = async (): Promise<InventoryItem[]> => {
-  // Check if we have data in localStorage
+  console.log('Fetching inventory items...');
+  
   const storedItems = localStorage.getItem('inventoryItems');
   if (storedItems) {
+    console.log('Retrieved items from localStorage');
     return JSON.parse(storedItems);
   }
   
-  // If not, fetch from the JSON file (initial data)
-  const response = await fetch('/data/inventory-data.json');
-  const data = await response.json();
-  
-  // Store in localStorage for future use
-  localStorage.setItem('inventoryItems', JSON.stringify(data.items));
-  
-  return data.items;
+  try {
+    console.log('No items in localStorage, fetching from JSON file');
+    const response = await fetch('/data/inventory-data.json');
+    
+    if (!response.ok) {
+      throw new Error(`Failed to fetch: ${response.status}`);
+    }
+    
+    const data = await response.json();
+    console.log('Fetched data:', data);
+    
+    if (!data || !data.items || !Array.isArray(data.items)) {
+      console.error('Invalid data structure in inventory-data.json');
+      return [];
+    }
+    
+    localStorage.setItem('inventoryItems', JSON.stringify(data.items));
+    
+    return data.items;
+  } catch (error) {
+    console.error('Error fetching inventory data:', error);
+    
+    const defaultItems: InventoryItem[] = [
+      {
+        id: "INV001",
+        name: "Laptop Dell XPS 13",
+        description: "High-end laptop with 16GB RAM and 512GB SSD",
+        category: "Electronics",
+        quantity: 15,
+        price: 1299.99,
+        supplier: "Dell Inc.",
+        sku: "DELL-XPS13-001",
+        location: "Warehouse A, Shelf 2",
+        lastRestocked: "2023-06-15T10:30:00Z",
+        minimumStock: 5,
+        image: "laptop-dell-xps13.jpg"
+      }
+    ];
+    
+    localStorage.setItem('inventoryItems', JSON.stringify(defaultItems));
+    return defaultItems;
+  }
 };
 
 export const fetchInventoryItem = async (id: string): Promise<InventoryItem | null> => {
@@ -26,44 +60,47 @@ export const fetchInventoryItem = async (id: string): Promise<InventoryItem | nu
 };
 
 export const createInventoryItem = async (item: Omit<InventoryItem, 'id'>): Promise<InventoryItem> => {
-  // Generate a unique ID
   const id = `INV${Math.floor(Math.random() * 1000).toString().padStart(3, '0')}`;
-  
-  // Create the new item
   const newItem: InventoryItem = {
     id,
     ...item
   };
   
-  // Get current items
-  const currentItems = await fetchInventoryItems();
-  
-  // Add new item
-  const updatedItems = [...currentItems, newItem];
-  
-  // Save to localStorage
-  localStorage.setItem('inventoryItems', JSON.stringify(updatedItems));
-  
-  return newItem;
+  try {
+    const currentItems = await fetchInventoryItems();
+    
+    const updatedItems = [...currentItems, newItem];
+    
+    localStorage.setItem('inventoryItems', JSON.stringify(updatedItems));
+    console.log('Item created and saved to localStorage:', newItem);
+    
+    return newItem;
+  } catch (error) {
+    console.error('Error creating inventory item:', error);
+    throw error;
+  }
 };
 
 export const updateInventoryItem = async (
   id: string, 
   updates: Partial<InventoryItem>
 ): Promise<InventoryItem> => {
-  const items = await fetchInventoryItems();
-  const itemIndex = items.findIndex(item => item.id === id);
+  try {
+    const items = await fetchInventoryItems();
+    const itemIndex = items.findIndex(item => item.id === id);
+    
+    if (itemIndex === -1) {
+      throw new Error('Item not found');
+    }
+    
+    const updatedItem = { ...items[itemIndex], ...updates };
+    items[itemIndex] = updatedItem;
   
-  if (itemIndex === -1) {
-    throw new Error('Item not found');
+    localStorage.setItem('inventoryItems', JSON.stringify(items));
+    
+    return updatedItem;
+  } catch (error) {
+    console.error('Error updating inventory item:', error);
+    throw error;
   }
-  
-  // Update the item
-  const updatedItem = { ...items[itemIndex], ...updates };
-  items[itemIndex] = updatedItem;
-  
-  // Save to localStorage
-  localStorage.setItem('inventoryItems', JSON.stringify(items));
-  
-  return updatedItem;
 };
