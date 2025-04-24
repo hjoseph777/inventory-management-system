@@ -1,0 +1,16 @@
+{
+  "files": {
+    "main.css": "/inventory-management-system/static/css/main.ee3935e7.chunk.css",
+    "main.js": "/inventory-management-system/static/js/main.4410e0b1.chunk.js",
+    "runtime-main.js": "/inventory-management-system/static/js/runtime-main.8ed6bb65.js",
+    "static/js/2.56539104.chunk.js": "/inventory-management-system/static/js/2.56539104.chunk.js",
+    "index.html": "/inventory-management-system/index.html",
+    "static/js/2.56539104.chunk.js.LICENSE.txt": "/inventory-management-system/static/js/2.56539104.chunk.js.LICENSE.txt"
+  },
+  "entrypoints": [
+    "static/js/runtime-main.8ed6bb65.js",
+    "static/js/2.56539104.chunk.js",
+    "static/css/main.ee3935e7.chunk.css",
+    "static/js/main.4410e0b1.chunk.js"
+  ]
+}
